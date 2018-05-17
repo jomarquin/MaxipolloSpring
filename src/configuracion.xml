@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">		
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/maxipollo"/>
+		<property name="username" value="root"/>
+		<property name="password" value="johan71086742"/>		
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mappingResources">
+			<list>
+				<value>co/com/maxipollo/dao/mapping/Pedido.hbm.xml</value>
+				<value>co/com/maxipollo/dao/mapping/Cliente.hbm.xml</value>
+				<value>co/com/maxipollo/dao/mapping/Reservacion.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="clienteDao" class="co.com.maxipollo.dao.hibernate.ClienteDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	<bean id="pedidoDao" class="co.com.maxipollo.dao.hibernate.PedidoDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="reservacionDao" class="co.com.maxipollo.dao.hibernate.ReservacionDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="clienteService" class="co.com.maxipollo.service.ClienteService">
+		<property name="clienteDAO" ref="clienteDao"></property>
+	</bean>
+		<bean id="pedidoService" class="co.com.maxipollo.service.PedidoService">
+		<property name="pedidoDAO" ref="pedidoDao"></property>
+	</bean>
+	<bean id="reservacionService" class="co.com.maxipollo.service.ReservacionService">
+		<property name="reservacionDAO" ref="reservacionDao"></property>
+	</bean>
+
+</beans>

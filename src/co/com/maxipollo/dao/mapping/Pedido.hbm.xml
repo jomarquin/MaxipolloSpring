@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 01-may-2018 12:22:23 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="co.com.maxipollo.dto.Pedido" table="PEDIDOS">
+        <id name="idPedido" type="java.lang.Integer">
+            <column name="IDPEDIDO" precision="10"/>
+            <generator class="assigned" />
+        </id>
+        <property name="fechaPedido" type="java.util.Date">
+            <column name="FECHAPEDIDO" not-null="true"/>
+        </property>
+        <property name="cedulaPedido" type="java.lang.String">
+            <column name="CEDULAPEDIDO" not-null="true" length="15"/>
+        </property>
+        <property name="valorPedido" type="double">
+            <column name="VALORPEDIDO" not-null="true"/>
+        </property>
+        <property name="eliminado" type="java.lang.Boolean">
+            <column name="ELIMINADO" not-null="false"/>
+        </property>
+        <property name="fechaEliminacion" type="java.util.Date">
+            <column name="FECHAELIMINACION" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>
